@@ -1,0 +1,11 @@
+.previous {
+  margin-left: 33px;
+  text-decoration: none;
+  position: relative;
+  color: white;
+  border-color: white;
+  border-radius: 50%;
+  padding: 3px 10px;
+  font-size:xx-large;
+  cursor: pointer;
+}

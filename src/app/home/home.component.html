@@ -1,0 +1,80 @@
+<div [style.fontSize.rem]="fontSize">
+  <nav>
+    <div class="navbar_top bg-color">
+      <div class="menu">
+        <a routerLink="home" routerLinkActive="active">Home</a>
+        <a routerLink="about" routerLinkActive="active">About</a>
+        <a routerLink="contact" routerLinkActive="active">Contact Us</a>
+        <div class="font-controls">
+          <a (click)="decreaseFont()">A-</a>
+          <a (click)="resetFont()">A</a>
+          <a (click)="increaseFont()">A+</a>
+        </div>
+        
+        <!-- Add language selector -->
+        <app-language-selector (languageChanged)="translatePage($event)"></app-language-selector>
+        
+        <div class="theme-buttons">
+          <button class="theme-btn blue" (click)="setTheme('blue','lightblue')" title="Blue Theme"></button>
+          <button class="theme-btn red" (click)="setTheme('red','#FF7276')" title="Red Theme"></button>
+          <button class="theme-btn green" (click)="setTheme('green','lightgreen')" title="Green Theme"></button>
+          <button class="theme-btn purple" (click)="setTheme('purple','#9c50b6')" title="Purple Theme"></button>
+        </div>
+      </div>
+
+      <div class="search-container">
+        <div class="search">
+          <input type="text" 
+                 placeholder="Search services..." 
+                 #searchInput 
+                 (input)="onSearchInput(searchInput.value)"
+                 (keyup.enter)="search(searchInput.value)"/>
+          <button (click)="search(searchInput.value)" class="font-color">Search</button>
+        </div>
+        
+        <!-- Suggestions dropdown -->
+        <div class="suggestions-dropdown bg-color" *ngIf="showSuggestions && filteredSuggestions.length > 0">
+          <div *ngFor="let suggestion of filteredSuggestions" 
+               class="suggestion-item"
+               (click)="selectSuggestion(suggestion)">
+            {{suggestion}}
+          </div>
+        </div>
+        <!-- No results message -->
+        <div class="no-results bg-color" *ngIf="showNoResults">
+          No results found for "{{currentSearchTerm}}"
+        </div>
+      </div>
+    </div>
+    
+    <!-- Rest of your template remains the same -->
+    <div class="navbar_mid">
+      <div class="logo">
+        <img src="assets/images/lion.png" alt="lion" routerLink="/" style="cursor: pointer"/>
+      </div>
+      <div class="logoname">
+        <p>SMART</p>
+        <p>TRANSPO</p>
+        <p>CONNECT</p>
+      </div>
+      <div class="vertical-line"></div>
+      <div class="right_side">
+        <p>Government of India</p>
+        <p>MINISTRY OF ROAD TRANSPORT & HIGHWAYS</p>
+      </div>
+      <div>
+        <button routerLink="/login-register">Login</button>
+      </div>
+    </div>
+    
+    <div class="navbar_bottom bg-color">
+      <a routerLink="home/license-services" routerLinkActive="active">License Related Services</a>
+      <a routerLink="home/vehicle-services" routerLinkActive="active">Vehicle Related Services</a>
+      <a routerLink="home/manufacturer-services" routerLinkActive="active">Manufacturer Related Services</a>
+      <a routerLink="home/informational-services" routerLinkActive="active">Informational Services</a>
+      <a routerLink="home/dashboard" routerLinkActive="active">Dashboard</a>
+    </div> 
+  </nav>
+  <router-outlet></router-outlet>
+  <app-footer></app-footer>
+</div>

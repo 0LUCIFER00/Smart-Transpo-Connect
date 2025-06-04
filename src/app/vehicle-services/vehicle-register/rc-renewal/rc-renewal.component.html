@@ -1,0 +1,111 @@
+<app-back-btn />
+<form [formGroup]="renewalForm" (ngSubmit)="submitForm()" class="form-container">
+    <h2 class="form-title">Renew Vehicle Registration Certificate (RC)</h2>
+  <div class="form-row">
+    <div class="form-group">
+      <label>Vehicle Number:</label>
+      <input type="text" formControlName="vehicleNumber" class="form-input" placeholder="e.g. MH01AB1234" />
+      <div *ngIf="renewalForm.get('vehicleNumber')?.invalid && renewalForm.get('vehicleNumber')?.touched" class="validation-error">
+        Valid vehicle number is required
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Chassis Number:</label>
+      <input type="text" formControlName="chassisNumber" class="form-input" placeholder="17-digit chassis number" />
+      <div *ngIf="renewalForm.get('chassisNumber')?.invalid && renewalForm.get('chassisNumber')?.touched" class="validation-error">
+        Valid chassis number is required
+      </div>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label>Owner Name:</label>
+      <input type="text" formControlName="ownerName" class="form-input" placeholder="Full name as per RC" />
+      <div *ngIf="renewalForm.get('ownerName')?.invalid && renewalForm.get('ownerName')?.touched" class="validation-error">
+        Owner name is required
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Mobile Number:</label>
+      <input type="text" formControlName="mobileNumber" class="form-input" placeholder="10-digit mobile number" />
+      <div *ngIf="renewalForm.get('mobileNumber')?.invalid && renewalForm.get('mobileNumber')?.touched" class="validation-error">
+        Valid mobile number is required
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Reason for Renewal:</label>
+    <select formControlName="reason" class="form-select">
+      <option value="" disabled selected>Select a reason</option>
+      <option *ngFor="let reason of reasons" [value]="reason">{{ reason }}</option>
+    </select>
+    <div *ngIf="renewalForm.get('reason')?.invalid && renewalForm.get('reason')?.touched" class="validation-error">
+      Please select a reason
+    </div>
+  </div>
+
+  <div class="document-upload-section">
+    <h3 class="section-title">Upload Required Documents</h3>
+    
+    <div class="form-row">
+      <div class="form-group file-upload">
+        <label>Expired RC Copy:</label>
+        <label class="file-upload-label">
+          <input type="file" (change)="onFileChange($event, 'expiredRcCopy')" class="file-input" accept=".pdf,.jpg,.png" required />
+          <span class="file-upload-button">Choose File</span>
+          <span class="file-name">{{ expiredRcCopyFileName || 'No file chosen' }}</span>
+        </label>
+        <div *ngIf="!expiredRcCopyFileName && formSubmitted" class="validation-error">
+          Expired RC copy is required
+        </div>
+      </div>
+
+      <div class="form-group file-upload">
+        <label>Insurance Certificate:</label>
+        <label class="file-upload-label">
+          <input type="file" (change)="onFileChange($event, 'insuranceCertificate')" class="file-input" accept=".pdf,.jpg,.png" required />
+          <span class="file-upload-button">Choose File</span>
+          <span class="file-name">{{ insuranceCertificateFileName || 'No file chosen' }}</span>
+        </label>
+        <div *ngIf="!insuranceCertificateFileName && formSubmitted" class="validation-error">
+          Insurance certificate is required
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group file-upload">
+        <label>PUC Certificate:</label>
+        <label class="file-upload-label">
+          <input type="file" (change)="onFileChange($event, 'pucCertificate')" class="file-input" accept=".pdf,.jpg,.png" required />
+          <span class="file-upload-button">Choose File</span>
+          <span class="file-name">{{ pucCertificateFileName || 'No file chosen' }}</span>
+        </label>
+        <div *ngIf="!pucCertificateFileName && formSubmitted" class="validation-error">
+          PUC certificate is required
+        </div>
+      </div>
+
+      <div class="form-group file-upload">
+        <label>Address Proof:</label>
+        <label class="file-upload-label">
+          <input type="file" (change)="onFileChange($event, 'addressProof')" class="file-input" accept=".pdf,.jpg,.png" required />
+          <span class="file-upload-button">Choose File</span>
+          <span class="file-name">{{ addressProofFileName || 'No file chosen' }}</span>
+        </label>
+        <div *ngIf="!addressProofFileName && formSubmitted" class="validation-error">
+          Address proof is required
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="submit-button">Submit Renewal Application</button>
+    <button type="button" class="reset-button" (click)="resetForm()">Reset Form</button>
+  </div>
+</form>

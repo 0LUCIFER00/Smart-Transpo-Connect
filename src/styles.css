@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+:root {
+    --primary-color: blue;
+    --light-color: lightblue;
+  }
+  
+  .bg-color {
+    background-color: var(--primary-color);
+  }
+  
+  .bg-lightcolor {
+    background-color: var(--light-color);
+  }
+  
+  .font-color {
+    color: var(--primary-color);
+  }
+
+  .border-color{
+    border:1px solid var(--light-color);
+  }
+  .border-color:focus{
+    border: 1px solid var(--primary-color);
+    outline: none;
+  }
+
+  .focus input{
+    border: 1px solid #ddd;
+  }
+  .focus input:focus{
+    border: 1px solid var(--primary-color);
+    outline: none;
+}

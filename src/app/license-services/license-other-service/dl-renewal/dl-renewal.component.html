@@ -1,0 +1,101 @@
+<app-back-btn />
+
+<form *ngIf="!dlVerified" [formGroup]="dlVerifyForm" (ngSubmit)="verifyDL()" class="dl-verification-form">
+  <h2>Verify Driving License</h2>
+
+  <div class="form-group">
+    <label>DL Number:</label>
+    <input type="text" formControlName="dlNumber" required />
+  </div>
+
+  <div class="form-group">
+    <label>Date of Birth:</label>
+    <input type="date" formControlName="dob" required />
+  </div>
+
+  <button type="submit" [disabled]="!dlVerifyForm.valid">Verify</button>
+</form>
+
+
+<form *ngIf="dlVerified" [formGroup]="renewalForm" class="dl-renewal-container">
+  <h2>Driving License Renewal - Step {{ step }} of {{ maxStep }}</h2>
+
+  <!-- Step 1: DL Info -->
+  <div *ngIf="step === 1">
+    <label>Full Name:</label>
+    <input type="text" formControlName="fullName" />
+    
+    <label>Aadhaar Number:</label>
+    <input type="text" formControlName="aadhaarNumber" />
+  </div>
+
+  <!-- Step 2: Address & Vehicle -->
+  <div *ngIf="step === 2">
+    <label>Address:</label>
+    <input type="text" formControlName="address" />
+
+    <label>Vehicle Class:</label>
+    <input type="text" formControlName="vehicleClass" />
+
+    <label>Reason for Renewal:</label>
+    <input type="text" formControlName="renewalReason" />
+  </div>
+
+  <!-- Step 3: Uploads -->
+  <div *ngIf="step === 3" formGroupName="documents">
+    <label>Upload Photo:</label>
+    <input type="file" (change)="onFileChange($event, 'photo')" />
+
+    <label>Upload Signature:</label>
+    <input type="file" (change)="onFileChange($event, 'signature')" />
+  </div>
+
+  <!-- Step 4: Payment -->
+  <div *ngIf="step === 4">
+    <label>Payment Method:</label>
+    <select formControlName="paymentMethod">
+      <option value="UPI">UPI</option>
+      <option value="Card">Card</option>
+      <option value="Bank">Net Banking</option>
+    </select>
+
+    <div *ngIf="renewalForm.get('paymentMethod')?.value === 'UPI'">
+      <label>UPI ID:</label>
+      <input type="text" formControlName="upiId" />
+    </div>
+
+    <div *ngIf="renewalForm.get('paymentMethod')?.value === 'Card'">
+      <label>Card Number:</label>
+      <input type="text" formControlName="cardNumber" />
+      
+      <label>Card Name:</label>
+      <input type="text" formControlName="cardName" />
+      
+      <label>Card Expiry:</label>
+      <input type="text" formControlName="cardExpiry" placeholder="MM/YY" />
+
+      <label>Card CVV:</label>
+      <input type="text" formControlName="cardCVV" />
+    </div>
+
+    <div *ngIf="renewalForm.get('paymentMethod')?.value === 'Bank'">
+      <label>Selected Bank:</label>
+      <input type="text" formControlName="selectedBank" />
+      
+      <label>Account Number:</label>
+      <input type="text" formControlName="accountNumber" />
+
+      <label>IFSC Code:</label>
+      <input type="text" formControlName="ifscCode" />
+    </div>
+  </div>
+  
+  
+  <!-- Navigation Buttons -->
+  <div class="button-row">
+    <button type="button" (click)="prevStep()" [disabled]="step === 1">Back</button>
+    <button *ngIf="step < maxStep" type="button" (click)="nextStep()">Next</button>
+    <button *ngIf="step === maxStep && !payed" type="button" (click)="payment()">Pay 50</button>
+    <button *ngIf="payed" type="submit" (click)="  submitApplication()">Submit</button>
+  </div>
+</form>

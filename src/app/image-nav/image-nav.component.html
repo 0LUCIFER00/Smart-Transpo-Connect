@@ -1,0 +1,18 @@
+ <!-- Image Slider Section -->
+ <div class="image-container">
+    <div class="slide" #slide>
+      <div class="item" *ngFor="let image of images">
+        <img [src]="image.src" [alt]="image.alt">
+        <div class="content">
+          <div class="name">{{image.name}}</div>
+          <div class="des">{{image.description}}</div>
+          <button>See more</button>
+        </div>
+      </div>
+    </div>
+    <div class="button-container">
+      <button class="prev bg-color" (click)="prev()">&laquo;</button>
+      <button class="next bg-color" (click)="next()">&raquo;</button>
+    </div>
+  </div>
+  <hr class="horizontal-divider bg-color" />

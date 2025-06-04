@@ -1,0 +1,29 @@
+<div class="bg-white">
+    <div class="container">
+      <!-- Title -->
+      <h1 class="font-color">Manufacturer Related Services</h1>
+  
+      <!-- Description -->
+      <p>
+        A number of applications/services devoted to vehicle/kit manufacturers for ease of operations and business
+      </p>
+  
+      <!-- Service Cards Grid -->
+      <div class="grid">
+        <!-- Service Card -->
+        <div class="card" *ngFor="let service of services">
+          <img
+            [alt]="'Icon representing ' + service.title"
+            height="100"
+            [src]="service.imageUrl"
+            width="100"
+          />
+          <h2 class="font-color">{{service.title}}</h2>
+          <p>{{service.description}}</p>
+          <button class="bg-color">
+            {{service.buttonText}}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>

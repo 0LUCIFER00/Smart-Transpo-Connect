@@ -1,0 +1,142 @@
+<div class="container">
+  <div class="form-container">
+    <!-- Login Form -->
+    <div class="form-box" *ngIf="showLoginForm">
+      <h1 class="font-color">Login</h1>
+      <form (ngSubmit)="onLoginSubmit()" #loginForm="ngForm">
+        <div class="form-group focus">
+          <label for="loginUsername">Username <span class="font-color">*</span></label>
+          <input
+            type="text"
+            id="loginUsername"
+            name="username"
+            [(ngModel)]="loginData.username"
+            required
+            placeholder="Enter your username"/>
+        </div>
+        <div class="form-group focus">
+          <label for="loginPassword"
+            >Password <span class="font-color">*</span></label>
+          <input
+            type="password"
+            id="loginPassword"
+            name="password"
+            [(ngModel)]="loginData.password"
+            required
+            placeholder="Enter your password"/>
+        </div>
+        <div class="form-group focus">
+          <div class="captcha">
+            <div class="captcha-text">{{ loginCaptcha }}</div>
+            <input
+              type="text"
+              [(ngModel)]="loginData.captcha"
+              name="loginCaptcha"
+              required/>
+          </div>
+        </div>
+        <button type="submit" class="btn bg-color">Login</button>
+        <div class="form-footer">
+          <a href="#" class="font-color">Forgot Password?</a>
+          <p>
+            Don't have an account?
+            <a href="#" class="font-color" (click)="toggleForms($event)"
+              >Register</a>
+          </p>
+        </div>
+      </form>
+    </div>
+
+    <!-- Registration Form -->
+    <div class="form-box" *ngIf="!showLoginForm">
+      <h1 class="font-color">Registration</h1>
+      <form (ngSubmit)="onRegisterSubmit()" #registerForm="ngForm">
+        <div class="form-group focus">
+          <label for="regName"
+            >Full Name <span class="font-color">*</span></label>
+          <input
+            type="text"
+            id="regName"
+            name="name"
+            [(ngModel)]="registerData.name"
+            required
+            placeholder="Enter your full name"/>
+        </div>
+        <div class="form-group focus">
+          <label for="regEmail"
+            >Email Address <span class="font-color">*</span></label>
+          <input
+            type="email"
+            id="regEmail"
+            name="email"
+            [(ngModel)]="registerData.email"
+            required
+            placeholder="Enter your email"/>
+        </div>
+        <div class="form-group focus">
+          <label for="regMobile"
+            >Mobile Number <span class="font-color">*</span></label>
+          <input
+            type="tel"
+            id="regMobile"
+            name="mobile"
+            [(ngModel)]="registerData.mobile"
+            required
+            placeholder="Enter your 10-digit mobile number"/>
+        </div>
+        <div class="form-group focus">
+          <label for="regUsername"
+            >Choose Username <span class="font-color">*</span></label>
+          <input
+            type="text"
+            id="regUsername"
+            name="username"
+            [(ngModel)]="registerData.username"
+            required
+            placeholder="Choose a username"/>
+        </div>
+        <div class="form-group focus">
+          <label for="regPassword"
+            >Create Password <span class="font-color">*</span></label>
+          <input
+            type="password"
+            id="regPassword"
+            name="password"
+            [(ngModel)]="registerData.password"
+            required
+            placeholder="Create a password"/>
+        </div>
+        <div class="form-group focus">
+          <label for="regConfirmPassword"
+            >Confirm Password <span class="font-color">*</span></label>
+          <input
+            type="password"
+            id="regConfirmPassword"
+            name="confirmPassword"
+            [(ngModel)]="registerData.confirmPassword"
+            required
+            placeholder="Confirm your password"/>
+        </div>
+        <div class="form-group focus">
+          <div class="captcha">
+            <div class="captcha-text">{{ registerCaptcha }}</div>
+            <input
+              type="text"
+              [(ngModel)]="registerData.captcha"
+              name="registerCaptcha"
+              placeholder="Enter captcha"
+              required/>
+          </div>
+        </div>
+        <button type="submit" class="btn bg-color">Register</button>
+        <div class="form-footer">
+          <p>
+            Already have an account?
+            <a href="#" class="font-color" (click)="toggleForms($event)"
+              >Login</a>
+          </p>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

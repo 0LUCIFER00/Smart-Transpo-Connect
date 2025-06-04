@@ -1,0 +1,32 @@
+<div class="bg-lightcolor">
+  <div class="container">
+    <!-- Title -->
+    <h1>Informational Services</h1>
+
+    <!-- Description -->
+    <p>
+      Explore essential vehicle-related information and utilities all in one
+      place. From tracking daily fuel prices to checking insurance and PUC
+      certificate validity, our informational services help vehicle owners stay
+      informed and compliant.
+    </p>
+
+    <!-- Service Cards Grid -->
+    <div class="grid">
+      <!-- Service Card -->
+      <div class="card" *ngFor="let service of services">
+        <img
+          [alt]="service.title + ' Icon'"
+          height="100"
+          [src]="service.imageUrl"
+          width="100"
+        />
+        <h2>{{ service.title }}</h2>
+        <p>{{ service.description }}</p>
+        <button class="bg-color" [routerLink]="service.route">
+          {{ service.buttonText }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

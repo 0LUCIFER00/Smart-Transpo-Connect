@@ -1,0 +1,451 @@
+<!-- Application Instructions -->
+<div class="container" *ngIf="stepIndex === 0">
+  <div class="header">Instructions for Application Submission</div>
+  <div class="content">
+    <p class="title">
+      Following are the stages of application for applying Driving licence
+    </p>
+    <ol>
+      <li>FILL APPLICATION DETAILS FOR DL</li>
+      <li>UPLOAD DOCUMENTS</li>
+      <li>FEE PAYMENT</li>
+      <li>DRIVING TEST SLOT BOOK</li>
+      <li>PRINT THE RECEIPT FROM DASHBOARD</li>
+    </ol>
+    <p class="note">
+      NOTE: Please go through the Road Safety tutorial before proceeding for
+      online Driving License test.
+    </p>
+    <div class="buttons">
+      <button type="button" class="bg-color" (click)="onCancel()">
+        Cancel
+      </button>
+      <button type="button" class="cancel-btn" (click)="stepIndex = 1">
+        Next
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Aadhaar Authentication -->
+<div class="container" *ngIf="stepIndex === 1">
+  <div class="header">Application With E-kyc</div>
+  <div class="content">
+    <p>
+      After successfully completing the application, you need to visit the RTO
+      office for a driving test.
+    </p>
+    <br />
+    <hr />
+    <br />
+    <form [formGroup]="authForm" (ngSubmit)="onAuthenticateSubmit()">
+      <div *ngIf="errorMessage" class="error-box">
+        {{ errorMessage }}
+      </div>
+
+      <div class="input-row">
+        <label>Learner License Number:</label>
+        <input type="number" formControlName="llNumber" class="border-color" />
+      </div>
+      <div class="input-row">
+        <label>Issue Date of LL</label>
+        <input type="date" formControlName="llDate" class="border-color" />
+      </div>
+      <div class="state-input-group">
+        <label>State:</label>
+        <select formControlName="state" class="border-color">
+          <option value="">-- Select --</option>
+          <option *ngFor="let state of states" [value]="state">
+            {{ state }}
+          </option>
+        </select>
+      </div>
+
+      <div class="aadhaar-section">
+        <div class="input-row">
+          <label>Aadhaar Number or Virtual ID</label>
+          <input
+            type="text"
+            formControlName="aadhaarInput"
+            class="border-color"
+          />
+          <div
+            *ngIf="
+              authForm.get('aadhaarInput')?.invalid &&
+              authForm.get('aadhaarInput')?.touched
+            "
+            class="error"
+          >
+            Aadhaar must be 12 digits.
+          </div>
+        </div>
+
+        <div class="input-row">
+          <button type="button" (click)="generateOTP()" class="bg-color">
+            Generate OTP
+          </button>
+        </div>
+
+        <div class="input-row">
+          <label>Enter OTP</label>
+          <input type="text" formControlName="otpInput" class="border-color" />
+          <div
+            *ngIf="
+              authForm.get('otpInput')?.invalid &&
+              authForm.get('otpInput')?.touched
+            "
+            class="error"
+          >
+            Enter a valid 6-digit OTP.
+          </div>
+        </div>
+
+        <div class="input-row">
+          <label>Full Name</label>
+          <input type="text" formControlName="fullName" class="border-color" />
+        </div>
+        <div class="input-row">
+          <label>Date of Birth</label>
+          <input type="date" formControlName="dob" class="border-color" />
+        </div>
+
+        <div class="input-row">
+          <label>Address</label>
+          <textarea formControlName="address" class="border-color"></textarea>
+        </div>
+
+        <div class="input-row">
+          <label>Educational Qualification</label>
+          <select formControlName="education" class="border-color">
+            <option value="">-- Select --</option>
+            <option value="10th">10th Pass</option>
+            <option value="12th">12th Pass</option>
+            <option value="graduate">Graduate</option>
+            <option value="postgraduate">Post Graduate</option>
+          </select>
+        </div>
+
+        <div class="input-row">
+          <label>Blood Group</label>
+          <select formControlName="bloodGroup" class="border-color">
+            <option value="">-- Select --</option>
+            <option *ngFor="let group of bloodGroups" [value]="group">
+              {{ group }}
+            </option>
+          </select>
+        </div>
+
+        <div class="input-row">
+          <label>Vehicle Class</label>
+          <select formControlName="vehicleClass" class="border-color">
+            <option value="">-- Select --</option>
+            <option value="MCWG">Motorcycle with Gear (MCWG)</option>
+            <option value="MCWOG">Motorcycle without Gear (MCWOG)</option>
+            <option value="LMV">Light Motor Vehicle (LMV)</option>
+            <option value="HV">Heavy Vehicle</option>
+          </select>
+        </div>
+
+        <!-- File Uploads -->
+        <div class="input-row" *ngFor="let file of fileFields">
+          <label>{{ file.label }}</label>
+          <input
+            type="file"
+            required
+            (change)="onFileChange($event, file.controlName)"
+          />
+        </div>
+
+        <!-- Consents -->
+        <div class="checkbox-group">
+          <label>
+            <input
+              type="checkbox"
+              formControlName="consent1"
+              class="bg-color"
+              required
+            />
+            I hereby state that I have no objection in authenticating myself
+            with Aadhaar based authentication system and give my consent to
+            providing my Aadhaar number, Biometric and/ or One Time Pin (OTP)
+            data for Aadhaar based authentication/eKYC for the purpose of
+            availing of the Driving License related Service provided by the
+            concerned Transport Department myself with Aadhaar Based
+            Authentication System.
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              formControlName="consent2"
+              class="bg-color"
+              required
+            />
+            I understand that the Biometrics and OTP I provide for
+            authentication shall be used only for authenticating my identity
+            through the Aadhaar Authentication Service or for obtaining my eKYC
+            data through Aadhaar eKYC Service for that specific transaction and
+            for no other purposes.
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              formControlName="consent3"
+              class="bg-color"
+              required
+            />
+            I understand that the Transport Department shall ensure security and
+            confidentiality of my personal identity data provided for the
+            purpose of Aadhaar based authentication eKYC.
+          </label>
+        </div>
+
+        <div class="buttons">
+          <button type="button" class="bg-color" (click)="stepIndex = 0">
+            Back
+          </button>
+          <button type="submit" class="cancel-btn">Next</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Payment Section -->
+<div class="container" *ngIf="stepIndex === 2">
+  <div class="header">Payment for Driving License</div>
+  <div class="content">
+    <div class="form-section">
+      <h3>Payment Summary</h3>
+      <div class="summary-row"><span>Test Fee:</span><span>₹200</span></div>
+      <div class="summary-row">
+        <span>Convenience Fee:</span><span>₹10</span>
+      </div>
+      <div class="summary-row total"><span>Total:</span><span>₹210</span></div>
+    </div>
+
+    <div class="form-section">
+      <h3>Select Payment Method</h3>
+      <div class="payment-methods">
+        <div
+          class="payment-method"
+          *ngFor="let method of paymentMethods"
+          [class.selected]="selectedMethod === method.id"
+          (click)="selectedMethod = method.id"
+        >
+          <div class="method-name">{{ method.name }}</div>
+        </div>
+      </div>
+    </div>
+
+    <form #paymentForm="ngForm" (ngSubmit)="proceedToPay()">
+      <!-- Card Payment -->
+      <div *ngIf="selectedMethod === 'card'" class="form-section">
+        <h4>Enter Card Details</h4>
+        <input
+          type="text"
+          placeholder="Card Number"
+          name="cardNumber"
+          [(ngModel)]="cardDetails.number"
+          #cardNumber="ngModel"
+          required
+          pattern="^[0-9]{16}$"
+        />
+        <div *ngIf="cardNumber.invalid && cardNumber.touched" class="error">
+          Card number must be 16 digits.
+        </div>
+
+        <input
+          type="text"
+          placeholder="Name on Card"
+          name="cardName"
+          [(ngModel)]="cardDetails.name"
+          #cardName="ngModel"
+          required
+        />
+        <div *ngIf="cardName.invalid && cardName.touched" class="error">
+          Name is required.
+        </div>
+
+        <input
+          type="text"
+          placeholder="Expiry (MM/YY)"
+          name="cardExpiry"
+          [(ngModel)]="cardDetails.expiry"
+          #cardExpiry="ngModel"
+          required
+          pattern="^(0[1-9]|1[0-2])\/[0-9]{2}$"
+        />
+        <div *ngIf="cardExpiry.invalid && cardExpiry.touched" class="error">
+          Expiry must be in MM/YY format.
+        </div>
+
+        <input
+          type="password"
+          placeholder="CVV"
+          name="cardCVV"
+          [(ngModel)]="cardDetails.cvv"
+          #cardCVV="ngModel"
+          required
+          pattern="^[0-9]{3}$"
+        />
+        <div *ngIf="cardCVV.invalid && cardCVV.touched" class="error">
+          CVV must be 3 digits.
+        </div>
+      </div>
+
+      <!-- UPI Payment -->
+      <div *ngIf="selectedMethod === 'upi'" class="form-section">
+        <h4>Enter UPI ID</h4>
+        <input
+          type="text"
+          placeholder="example@upi"
+          name="upiId"
+          [(ngModel)]="upiId"
+          #upiIdModel="ngModel"
+          required
+          pattern="^[\w.-]+@[\w]{3,}$"
+        />
+        <div *ngIf="upiIdModel.invalid && upiIdModel.touched" class="error">
+          Enter a valid UPI ID.
+        </div>
+      </div>
+
+      <!-- Net Banking -->
+      <div *ngIf="selectedMethod === 'netbanking'" class="form-section">
+        <h4>Select Bank</h4>
+        <select
+          name="selectedBank"
+          [(ngModel)]="selectedBank"
+          #selectedBankModel="ngModel"
+          required
+        >
+          <option value="" disabled>Select Bank</option>
+          <option>State Bank of India</option>
+          <option>HDFC Bank</option>
+          <option>ICICI Bank</option>
+          <option>Axis Bank</option>
+        </select>
+        <div
+          *ngIf="selectedBankModel.invalid && selectedBankModel.touched"
+          class="error"
+        >
+          Select a bank.
+        </div>
+
+        <h4>Account Number:</h4>
+        <input
+          type="number"
+          name="accountNumber"
+          [(ngModel)]="accountNumber"
+          #accountNumberModel="ngModel"
+          required
+          pattern="^[0-9]{10}$"
+        />
+        <div
+          *ngIf="accountNumberModel.invalid && accountNumberModel.touched"
+          class="error"
+        >
+          Account number is required.
+        </div>
+
+        <h4>IFSC Number:</h4>
+        <input
+          type="text"
+          name="ifscCode"
+          [(ngModel)]="ifscCode"
+          #ifscCodeModel="ngModel"
+          required
+          pattern="^[A-Z]{4}0[A-Z0-9]{6}$"
+        />
+        <div
+          *ngIf="ifscCodeModel.invalid && ifscCodeModel.touched"
+          class="error"
+        >
+          Enter a valid IFSC code.
+        </div>
+      </div>
+
+      <!-- Terms -->
+      <div class="terms-checkbox">
+        <label>
+          <input
+            type="checkbox"
+            name="acceptTerms"
+            [(ngModel)]="acceptTerms"
+            #termsModel="ngModel"
+            required
+          />
+          I agree to the <a href="#">Terms</a> and authorize payment
+        </label>
+        <div *ngIf="termsModel.invalid && termsModel.touched" class="error">
+          You must accept the terms.
+        </div>
+      </div>
+
+      <!-- Buttons -->
+      <div class="buttons">
+        <button type="button" class="back-btn" (click)="stepIndex = 1">
+          Back
+        </button>
+        <button type="submit" class="pay-btn" (click)="stepIndex = 3">
+          Pay ₹210
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Schedule Test -->
+<div class="container" *ngIf="stepIndex === 3">
+  <div class="header">Schedule Driving Test</div>
+  <div class="content">
+    <form [formGroup]="scheduleForm" (ngSubmit)="scheduleTest()">
+      <div class="form-section">
+        <h3>Select RTO Center</h3>
+        <div class="input-row">
+          <label>Nearest RTO Center:</label>
+          <select formControlName="rtoCenter">
+            <option value="">-- Select RTO Center --</option>
+            <option *ngFor="let center of rtoCenters" [value]="center.id">
+              {{ center.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>Select Test Date & Time</h3>
+        <div class="input-row">
+          <label>Available Date:</label>
+          <input
+            type="date"
+            formControlName="testDate"
+            [min]="minDate"
+            [max]="maxDate"
+          />
+        </div>
+
+        <div class="input-row" *ngIf="availableSlots.length > 0">
+          <label>Time Slots:</label>
+          <div class="time-slots">
+            <button
+              type="button"
+              *ngFor="let slot of availableSlots"
+              [class.selected]="scheduleForm.get('timeSlot')?.value === slot"
+              (click)="selectTimeSlot(slot)"
+            >
+              {{ slot }}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="buttons">
+        <button type="button" class="back-btn" (click)="stepIndex = 2">
+          Back
+        </button>
+        <button (click)="submitApplication()">Submit</button>
+      </div>
+    </form>
+  </div>
+</div>

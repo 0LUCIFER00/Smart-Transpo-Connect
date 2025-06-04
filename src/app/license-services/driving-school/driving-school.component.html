@@ -1,0 +1,47 @@
+<div class="filter-container">
+  <label>
+    Filter by Address:
+    <input
+      type="text"
+      placeholder="Enter city, street or state"
+      [(ngModel)]="addressFilter"
+      (input)="onAddressFilterChange(addressFilter)"
+    />
+  </label>
+
+  <label>
+    Minimum Ratings:
+    <select [(ngModel)]="ratingFilter" (change)="onRatingFilterChange(ratingFilter?.toString() || '')">
+      <option [ngValue]="null">Any</option>
+      <option [ngValue]="5">5</option>
+      <option [ngValue]="4">4+</option>
+      <option [ngValue]="3">3+</option>
+      <option [ngValue]="2">2+</option>
+      <option [ngValue]="1">1+</option>
+    </select>
+  </label>
+</div>
+
+<div *ngIf="filteredSchools.length === 0 && (addressFilter === '' && ratingFilter === null)" class="empty-message">
+  <p>🔍 Please enter a place or select a rating to view driving schools.</p>
+</div>
+
+<div *ngIf="filteredSchools.length === 0 && (addressFilter !== '' || ratingFilter !== null)" class="empty-message">
+  <p>❌ No driving schools found for your search.</p>
+</div>
+
+<div *ngIf="addressFilter !== '' || ratingFilter !== null" class="card-container">
+  <div *ngFor="let school of filteredSchools" class="school-card">
+    <h3>{{ school.name }}</h3>
+    <p><strong>Address:</strong> {{ school.address.street }}, {{ school.address.city }}, {{ school.address.state }} - {{ school.address.zip }}</p>
+    <p><strong>Phone:</strong> {{ school.phone }}</p>
+    <p><strong>Email:</strong> {{ school.email }}</p>
+    <p><strong>Website:</strong> <a href="{{ school.website }}" target="_blank">{{ school.website }}</a></p>
+    <p><strong>Ratings:</strong> {{ school.ratings }} / 5</p>
+    <p><strong>Instructors:</strong> {{ school.instructors }}</p>
+    <p><strong>Licenses Offered:</strong> {{ school.licensesOffered.join(', ') }}</p>
+    <p><strong>Hours:</strong> {{ school.hours }}</p>
+    <p><strong>Fees:</strong> ${{ school.fees }}</p>
+    <p><em>{{ school.description }}</em></p>
+  </div>
+</div>

@@ -1,0 +1,159 @@
+<div style="text-align: center; margin: 20px;">
+  <button (click)="loadLLReceipt()">Show LL Receipt</button>
+  <button (click)="loadDLReceipt()">Show DL Receipt</button>
+</div>
+
+
+<div class="receipt" *ngIf="activeReceipt === 'll' && application">
+  <div #receiptContent id="receiptContent">
+    <h2>Learner License Receipt</h2>
+    <p><strong>Application Number:</strong> {{ application.llNumber }}</p>
+    <p><strong>Name:</strong> {{ application.fullName }}</p>
+    <p><strong>Date of Birth:</strong> {{ application.dateOfBirth | date:'yyyy-MM-dd'  }}</p>
+    <p><strong>Aadhaar:</strong> {{ application.aadhaarNumber }}</p>
+    <p><strong>Address:</strong> {{ application.address }}</p>
+    <p><strong>Vehicle Class:</strong> {{ application.vehicleClass }}</p>
+    <p><strong>Issue Date of LL:</strong> {{ application.submittedAt | date:'yyyy-MM-dd'  }}</p>
+
+    <hr />
+
+    <h3>Test Details</h3>
+    <p><strong>RTO Center:</strong> {{ application.rtoCenterId }}</p>
+    <p><strong>Test Date:</strong> {{ application.testDate | date:'yyyy-MM-dd'  }}</p>
+    <p><strong>Time Slot:</strong> {{ application.timeSlot }}</p>
+
+    <hr />
+
+    <h3>Payment Info</h3>
+    <p><strong>Payment Method:</strong> {{ application.paymentMethod }}</p>
+    <ng-container [ngSwitch]="application.paymentMethod">
+      <div *ngSwitchCase="'upi'">
+        <p><strong>UPI ID:</strong> {{ application.upiId }}</p>
+      </div>
+      <div *ngSwitchCase="'card'">
+        <p>
+          <strong>Card Number:</strong> **** **** ****
+          {{ application.cardNumber?.slice(-4) }}
+        </p>
+        <p><strong>Card Name:</strong> {{ application.cardName }}</p>
+      </div>
+      <div *ngSwitchCase="'netbanking'">
+        <p><strong>Bank:</strong> {{ application.selectedBank }}</p>
+        <p>
+          <strong>Account:</strong> ****{{
+            application.accountNumber?.slice(-4)
+          }}
+        </p>
+        <p><strong>IFSC:</strong> {{ application.ifscCode }}</p>
+      </div>
+    </ng-container>
+  </div>
+  <div style="text-align: center; margin-top: 20px">
+    <button class="download-btn" (click)="downloadPDF()">
+      ⬇ Download Receipt (PDF)
+    </button>
+  </div>
+
+  <hr />
+
+  <h3>Uploaded Documents</h3>
+  <div *ngIf="application.ageProofFile">
+    <strong>Age Proof:</strong>
+    <a
+      [href]="'http://localhost:3000/' + application.ageProofFile"
+      target="_blank"
+      >View</a
+    >
+  </div>
+  <div *ngIf="application.photoFile">
+    <strong>Photo:</strong>
+    <a [href]="'http://localhost:3000/' + application.photoFile" target="_blank"
+      >View</a
+    >
+  </div>
+  <div *ngIf="application.signatureFile">
+    <strong>Signature:</strong>
+    <a
+      [href]="'http://localhost:3000/' + application.signatureFile"
+      target="_blank"
+      >View</a
+    >
+  </div>
+</div>
+
+
+<div class="receipt" *ngIf="activeReceipt === 'dl' && dlapplication">
+  <div #receiptContent id="receiptContent">
+    <h2>Driving License Receipt</h2>
+    <p><strong>Application Number:</strong> {{ dlapplication.dlNumber }}</p>
+    <p><strong>Name:</strong> {{ dlapplication.fullName }}</p>
+    <p><strong>Aadhaar:</strong> {{ dlapplication.aadhaarNumber }}</p>
+    <p><strong>Address:</strong> {{ dlapplication.address }}</p>
+    <p><strong>Vehicle Class:</strong> {{ dlapplication.vehicleClass }}</p>
+    <p><strong>Issue Date of DL:</strong> {{ dlapplication.submitAt | date:'yyyy-MM-dd'  }}</p>
+
+    <hr />
+
+    <h3>Test Details</h3>
+    <p><strong>RTO Center:</strong> {{ dlapplication.rtoCenterId }}</p>
+    <p><strong>Test Date:</strong> {{ dlapplication.testDate | date:'yyyy-MM-dd'  }}</p>
+    <p><strong>Time Slot:</strong> {{ dlapplication.timeSlot }}</p>
+
+    <hr />
+
+    <h3>Payment Info</h3>
+    <p><strong>Payment Method:</strong> {{ dlapplication.paymentMethod }}</p>
+    <ng-container [ngSwitch]="dlapplication.paymentMethod">
+      <div *ngSwitchCase="'upi'">
+        <p><strong>UPI ID:</strong> {{ dlapplication.upiId }}</p>
+      </div>
+      <div *ngSwitchCase="'card'">
+        <p>
+          <strong>Card Number:</strong> **** **** ****
+          {{ dlapplication.cardNumber?.slice(-4) }}
+        </p>
+        <p><strong>Card Name:</strong> {{ dlapplication.cardName }}</p>
+      </div>
+      <div *ngSwitchCase="'netbanking'">
+        <p><strong>Bank:</strong> {{ dlapplication.selectedBank }}</p>
+        <p>
+          <strong>Account:</strong> ****{{
+            dlapplication.accountNumber?.slice(-4)
+          }}
+        </p>
+        <p><strong>IFSC:</strong> {{ dlapplication.ifscCode }}</p>
+      </div>
+    </ng-container>
+  </div>
+  <div style="text-align: center; margin-top: 20px">
+    <button class="download-btn" (click)="downloadPDF()">
+      ⬇ Download Receipt (PDF)
+    </button>
+  </div>
+
+  <hr />
+
+  <h3>Uploaded Documents</h3>
+  <div *ngIf="dlapplication.ageProofFile">
+    <strong>Age Proof:</strong>
+    <a
+      [href]="'http://localhost:3000/' + dlapplication.ageProofPath"
+      target="_blank"
+      >View</a
+    >
+  </div>
+  <div *ngIf="dlapplication.photoFile">
+    <strong>Photo:</strong>
+    <a [href]="'http://localhost:3000/' + dlapplication.photoPath" target="_blank"
+      >View</a
+    >
+  </div>
+  <div *ngIf="dlapplication.signatureFile">
+    <strong>Signature:</strong>
+    <a
+      [href]="'http://localhost:3000/' + dlapplication.signaturePath"
+      target="_blank"
+      >View</a
+    >
+  </div>
+</div>

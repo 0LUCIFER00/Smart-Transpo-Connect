@@ -1,0 +1,165 @@
+body {
+  background-color: white;
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 80rem;
+  margin: 1rem auto;
+  border: 2px solid #f97316;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
+
+/* Top bar */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #f97316;
+  padding-bottom: 0.25rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  a {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 12px;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: 400;
+      color: rgb(255, 255, 255);
+      text-decoration: none;
+      flex-shrink: 0;
+
+      i {
+        font-style: normal;
+        width: 30px;
+        height: 20px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        background-color: white;
+      }
+
+      &.petrol {
+        background-color: #00796b;
+      }
+      &.petrol i {
+        background-image: url('data:image/svg+xml;utf8,<svg fill="%23007f7f" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C8 6 6 10 6 14a6 6 0 0012 0c0-4-4-8-6-12z"/></svg>');
+      }
+    }
+}
+
+
+.price-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: #9a3412;
+  font-weight: 600;
+  font-size: 0.875rem;
+  user-select: none;
+}
+
+.icons {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: #ea580c;
+}
+
+.icons i {
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+/* City Grid */
+.city-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  border-bottom: 2px solid #f97316;
+  margin-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.city {
+  width: 50%;
+  max-width: 25%;
+  margin-bottom: 0.5rem;
+}
+
+.city h2 {
+  color: #c2410c;
+  font-weight: bold;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.price {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-top: 0.25rem;
+  user-select: none;
+}
+
+.price span {
+  font-weight: 800;
+  font-size: 1.125rem;
+  color: #1f2937;
+}
+
+.price .diff {
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+.price i {
+  color: #15803d;
+  font-size: 0.875rem;
+}
+
+/* Scrollable Buttons */
+.scroll-container {
+  margin-top: 0.5rem;
+  overflow-x: auto;
+  white-space: nowrap;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+.button-row {
+  display: inline-flex;
+  gap: 0.5rem;
+  min-width: max-content;
+}
+
+.button-row button {
+  border: 1px solid #fb923c;
+  color: #ea580c;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  background: white;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.button-row .primary {
+  background-color: #ea580c;
+  color: white;
+}

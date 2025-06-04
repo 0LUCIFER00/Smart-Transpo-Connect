@@ -1,0 +1,106 @@
+<app-back-btn />
+
+<form [formGroup]="rcCorrectionForm" (ngSubmit)="submitForm()" class="form-container">
+    <h2 class="form-title">Correction in Registration Certificate (RC) Details</h2>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label>Vehicle Number:</label>
+      <input type="text" formControlName="vehicleNumber" class="form-input" placeholder="e.g. MH01AB1234" />
+      <div *ngIf="rcCorrectionForm.get('vehicleNumber')?.invalid && rcCorrectionForm.get('vehicleNumber')?.touched" class="validation-error">
+        Valid vehicle number is required (Format: AB12CD1234)
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Chassis Number:</label>
+      <input type="text" formControlName="chassisNumber" class="form-input" placeholder="17-digit chassis number" />
+      <div *ngIf="rcCorrectionForm.get('chassisNumber')?.invalid && rcCorrectionForm.get('chassisNumber')?.touched" class="validation-error">
+        Valid 17-digit chassis number is required
+      </div>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label>Current Owner Name:</label>
+      <input type="text" formControlName="currentOwnerName" class="form-input" placeholder="As per current RC" />
+      <div *ngIf="rcCorrectionForm.get('currentOwnerName')?.invalid && rcCorrectionForm.get('currentOwnerName')?.touched" class="validation-error">
+        Current owner name is required
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Correct Owner Name (if applicable):</label>
+      <input type="text" formControlName="correctOwnerName" class="form-input" placeholder="Correct name if changing" />
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label>Current Engine Number:</label>
+      <input type="text" formControlName="currentEngineNumber" class="form-input" placeholder="As per current RC" />
+      <div *ngIf="rcCorrectionForm.get('currentEngineNumber')?.invalid && rcCorrectionForm.get('currentEngineNumber')?.touched" class="validation-error">
+        Current engine number is required
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Correct Engine Number (if applicable):</label>
+      <input type="text" formControlName="correctEngineNumber" class="form-input" placeholder="Correct number if changing" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Reason for Correction:</label>
+    <textarea formControlName="correctionReason" class="form-textarea" placeholder="Explain why correction is needed"></textarea>
+    <div *ngIf="rcCorrectionForm.get('correctionReason')?.invalid && rcCorrectionForm.get('correctionReason')?.touched" class="validation-error">
+      Please provide reason for correction (minimum 20 characters)
+    </div>
+  </div>
+
+  <div class="document-upload-section">
+    <h3 class="section-title">Upload Required Documents</h3>
+    
+    <div class="form-row">
+      <div class="form-group file-upload">
+        <label>RC Copy:</label>
+        <label class="file-upload-label">
+          <input type="file" (change)="onFileChange($event, 'rcCopy')" class="file-input" accept=".pdf,.jpg,.png" required />
+          <span class="file-upload-button">Choose File</span>
+          <span class="file-name">{{ rcCopyFileName || 'No file chosen' }}</span>
+        </label>
+        <div *ngIf="!rcCopyFileName && formSubmitted" class="validation-error">
+          RC copy is required
+        </div>
+      </div>
+
+      <div class="form-group file-upload">
+        <label>Proof Document:</label>
+        <label class="file-upload-label">
+          <input type="file" (change)="onFileChange($event, 'proofDocument')" class="file-input" accept=".pdf,.jpg,.png" required />
+          <span class="file-upload-button">Choose File</span>
+          <span class="file-name">{{ proofDocumentFileName || 'No file chosen' }}</span>
+        </label>
+        <div *ngIf="!proofDocumentFileName && formSubmitted" class="validation-error">
+          Supporting document is required
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group declaration">
+    <label class="declaration-label">
+      <input type="checkbox" formControlName="declaration" class="declaration-checkbox" required />
+      <span>I confirm the above details are true and valid. I understand that providing false information may lead to legal consequences.</span>
+    </label>
+    <div *ngIf="rcCorrectionForm.get('declaration')?.invalid && formSubmitted" class="validation-error">
+      You must accept the declaration to proceed
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="submit-button" [disabled]="rcCorrectionForm.invalid && formSubmitted">Submit Correction Request</button>
+    <button type="button" class="reset-button" (click)="resetForm()">Reset Form</button>
+  </div>
+</form>

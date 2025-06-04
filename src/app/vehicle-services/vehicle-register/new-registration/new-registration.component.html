@@ -1,0 +1,243 @@
+<app-back-btn />
+<form
+  [formGroup]="vehicleForm"
+  (ngSubmit)="onSubmit()"
+  enctype="multipart/form-data"
+  class="vehicle-form"
+>
+  <!-- Step indicators -->
+  <div class="step-indicators">
+    <div
+      *ngFor="let step of steps; let i = index"
+      class="step-indicator"
+      [class.active]="currentStep === i"
+    >
+      {{ i + 1 }}
+    </div>
+  </div>
+
+  <!-- Step 1: State Selection -->
+  <div *ngIf="currentStep === 0" class="form-section">
+    <h2>State Selection</h2>
+    <div class="form-group state-input-group">
+      <label>State:</label>
+      <select formControlName="state" class="border-color">
+        <option value="">-- Select --</option>
+        <option *ngFor="let state of states" [value]="state">
+          {{ state }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Step 2: Owner Details -->
+  <div *ngIf="currentStep === 1" class="form-section">
+    <h2>Owner Details</h2>
+    <div class="form-group">
+      <label>Owner Name:</label>
+      <input formControlName="ownerName" />
+    </div>
+    <div class="form-group">
+      <label>Father's Name:</label>
+      <input formControlName="fatherName" />
+    </div>
+    <div class="form-group">
+      <label>Date of Birth:</label>
+      <input type="date" formControlName="dob" [max]="maxDob" />
+    </div>
+    <div class="form-group">
+      <label>Gender:</label>
+      <select formControlName="gender">
+        <option value="">Select</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Address:</label>
+      <textarea formControlName="address"></textarea>
+    </div>
+  </div>
+
+  <!-- Step 3: Vehicle Details -->
+  <div *ngIf="currentStep === 2" class="form-section">
+    <h2>Vehicle Details</h2>
+    <div class="form-group">
+      <label>Vehicle Type:</label>
+      <input formControlName="vehicleType" />
+    </div>
+    <div class="form-group">
+      <label>Manufacturer:</label>
+      <input formControlName="manufacturer" />
+    </div>
+    <div class="form-group">
+      <label>Model Name:</label>
+      <input formControlName="model" />
+    </div>
+    <div class="form-group">
+      <label>Fuel Type:</label>
+      <select formControlName="fuelType">
+        <option value="">Select</option>
+        <option value="Petrol">Petrol</option>
+        <option value="Diesel">Diesel</option>
+        <option value="CNG">CNG</option>
+        <option value="Electric">Electric</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Engine Number:</label>
+      <input formControlName="engineNumber" type="number" />
+    </div>
+    <div class="form-group">
+      <label>Chassis Number:</label>
+      <input formControlName="chassisNumber" type="number" />
+    </div>
+    <div class="form-group">
+      <label>Year of Manufacture:</label>
+      <input formControlName="yearOfManufacture" type="number" />
+    </div>
+    <div class="form-group">
+      <label>Vehicle Color:</label>
+      <input formControlName="color" />
+    </div>
+    <div class="form-group">
+      <label>Seating Capacity:</label>
+      <input formControlName="seatingCapacity" type="number" />
+    </div>
+    <div class="form-group">
+      <label>Cubic Capacity (CC):</label>
+      <input formControlName="cc" type="number" />
+    </div>
+  </div>
+
+  <!-- Step 4: Dealer & Purchase Details -->
+  <div *ngIf="currentStep === 3" class="form-section">
+    <h2>Dealer & Purchase Details</h2>
+    <div class="form-group">
+      <label>Name of Dealer:</label>
+      <input formControlName="dealerName" />
+    </div>
+    <div class="form-group">
+      <label>Invoice Number:</label>
+      <input formControlName="invoiceNumber" />
+    </div>
+    <div class="form-group">
+      <label>Invoice Date:</label>
+      <input formControlName="invoiceDate" type="date" />
+    </div>
+    <div class="form-group">
+      <label>Purchase Date:</label>
+      <input formControlName="purchaseDate" type="date" />
+    </div>
+  </div>
+
+  <!-- Step 5: Insurance Details -->
+  <div *ngIf="currentStep === 4" class="form-section">
+    <h2>Insurance Details</h2>
+    <div class="form-group">
+      <label>Insurance Company Name:</label>
+      <input formControlName="insuranceCompany" />
+    </div>
+    <div class="form-group">
+      <label>Policy Number:</label>
+      <input formControlName="policyNumber" />
+    </div>
+    <div class="form-group">
+      <label>Policy Start Date:</label>
+      <input formControlName="insuranceStart" type="date" />
+    </div>
+    <div class="form-group">
+      <label>Policy End Date:</label>
+      <input formControlName="insuranceEnd" type="date" />
+    </div>
+  </div>
+
+  <!-- Step 6: PUC (Pollution Under Control) -->
+  <div *ngIf="currentStep === 5" class="form-section">
+    <h2>PUC (Pollution Under Control)</h2>
+    <div class="form-group">
+      <label>PUC Certificate Number:</label>
+      <input formControlName="pucNumber" />
+    </div>
+    <div class="form-group">
+      <label>Issuing Date:</label>
+      <input formControlName="pucIssue" type="date" />
+    </div>
+    <div class="form-group">
+      <label>Valid Till:</label>
+      <input formControlName="pucValidTill" type="date" />
+    </div>
+  </div>
+
+  <!-- Step 7: Upload Documents -->
+  <div *ngIf="currentStep === 6" class="form-section">
+    <h2>Upload Documents</h2>
+    <div class="form-group">
+      <label>Upload Address Proof</label>
+      <input type="file" (change)="onFileChange($event, 'addressProof')" />
+    </div>
+    <div class="form-group">
+      <label>Upload Insurance Certificate</label>
+      <input
+        type="file"
+        (change)="onFileChange($event, 'insuranceCertificate')"
+      />
+    </div>
+    <div class="form-group">
+      <label>Upload PUC Certificate</label>
+      <input type="file" (change)="onFileChange($event, 'pucCertificate')" />
+    </div>
+  </div>
+
+  <!-- Step 8: Tax Details -->
+  <div *ngIf="currentStep === 7" class="form-section">
+    <h2>Tax Details</h2>
+    <div class="form-group">
+      <label>Road Tax Amount:</label>
+      <input formControlName="roadTax" type="number" />
+    </div>
+    <div class="form-group">
+      <label>Payment Reference Number:</label>
+      <input formControlName="paymentRef" />
+    </div>
+  </div>
+
+  <!-- Step 9: Declaration -->
+  <div *ngIf="currentStep === 8" class="form-section declaration">
+    <label>
+      <input type="checkbox" formControlName="declaration" />
+      I declare that all the details are correct.
+    </label>
+  </div>
+
+  <!-- Navigation Buttons -->
+  <div class="navigation-buttons">
+    <button
+      type="button"
+      (click)="prevStep()"
+      [disabled]="currentStep === 0"
+      class="nav-button"
+    >
+      Back
+    </button>
+    <button
+      type="button"
+      (click)="nextStep()"
+      *ngIf="currentStep < steps.length - 1"
+      [disabled]="!isCurrentStepValid()"
+      class="nav-button"
+    >
+      Next
+    </button>
+    <button
+      type="submit"
+      *ngIf="currentStep === steps.length - 1"
+      [disabled]="vehicleForm.invalid"
+      class="submit-button"
+    >
+      Submit
+    </button>
+  </div>
+</form>

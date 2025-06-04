@@ -1,0 +1,53 @@
+<app-back-btn />
+<form [formGroup]="dlChangeForm" class="dl-change-container">
+  <h2>DL Changes - Step {{ step }} of {{ maxStep }}</h2>
+
+  <!-- Step 1: DL Details -->
+  <div *ngIf="step === 1">
+    <label>DL Number:</label>
+    <input type="text" formControlName="dlNumber" />
+  </div>
+
+  <!-- Step 2: Personal Info -->
+  <div *ngIf="step === 2">
+    <label>Name:</label>
+    <input type="text" formControlName="name" />
+    <label>Date of Birth:</label>
+    <input type="date" formControlName="dob" />
+  </div>
+
+  <!-- Step 3: Contact Info -->
+  <div *ngIf="step === 3">
+    <label>Contact:</label>
+    <input type="text" formControlName="contact" />
+    <label>Reason for Change:</label>
+    <input type="text" formControlName="reason" />
+  </div>
+
+  <!-- Step 4: Change Information -->
+  <div *ngIf="step === 4" formArrayName="changes">
+    <div *ngFor="let change of changes.controls; let i = index" [formGroupName]="i">
+      <h4>Change #{{ i + 1 }}</h4>
+      <label>Change Type:</label>
+      <input type="text" formControlName="changeType" />
+      <label>Old Data:</label>
+      <input type="text" formControlName="oldData" />
+      <label>New Data:</label>
+      <input type="text" formControlName="newData" />
+    </div>
+    <button type="button" (click)="addChange()">+ Add Another Change</button>
+  </div>
+
+  <!-- Step 5: Preview -->
+  <div *ngIf="step === 5">
+    <h4>Review Details</h4>
+    <pre>{{ dlChangeForm.value | json }}</pre>
+  </div>
+
+  <!-- Navigation Buttons -->
+  <div class="button-row">
+    <button type="button" (click)="prevStep()" [disabled]="step === 1">Back</button>
+    <button type="button" *ngIf="step < maxStep" (click)="nextStep()">Next</button>
+    <button type="button" *ngIf="step === maxStep" (click)="submitApplication()">Submit</button>
+  </div>
+</form>

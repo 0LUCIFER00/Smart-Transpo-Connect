@@ -1,0 +1,48 @@
+<app-back-btn />
+<form [formGroup]="covForm" class="cov-container">
+  <h2>Add Class of Vehicle - Step {{ step }} of {{ maxStep }}</h2>
+
+  <!-- Step 1: DL Details -->
+  <div *ngIf="step === 1">
+    <label>DL Number:</label>
+    <input type="text" formControlName="dlNumber" />
+    <label>Date of Birth:</label>
+    <input type="date" formControlName="dob" />
+  </div>
+
+  <!-- Step 2: Personal Info -->
+  <div *ngIf="step === 2" formControlName="personalInfo">
+    <label>Name:</label>
+    <input type="text" formControlName="name" />
+    <label>Contact:</label>
+    <input type="text" formControlName="contact" />
+  </div>
+
+  <!-- Step 3: Vehicle Classes to Add -->
+  <div *ngIf="step === 3" formArrayName="newClasses">
+    <div *ngFor="let c of newClasses.controls; let i = index" [formGroupName]="i">
+      <h4>Class #{{ i + 1 }}</h4>
+      <label>Vehicle Class:</label>
+      <select formControlName="vehicleClass">
+        <option value="">-- Select --</option>
+        <option *ngFor="let cls of vehicleClasses" [value]="cls">{{ cls }}</option>
+      </select>
+      <label>Reason for Addition:</label>
+      <input type="text" formControlName="reason" />
+    </div>
+    <button type="button" (click)="addVehicleClass()">+ Add Another Class</button>
+  </div>
+
+  <!-- Step 4: Preview -->
+  <div *ngIf="step === 4">
+    <h4>Review Your Details</h4>
+    <pre>{{ covForm.value | json }}</pre>
+  </div>
+
+  <!-- Navigation Buttons -->
+  <div class="button-row">
+    <button type="button" (click)="prevStep()" [disabled]="step === 1">Back</button>
+    <button type="button" *ngIf="step < maxStep" (click)="nextStep()">Next</button>
+    <button type="button" *ngIf="step === maxStep" (click)="submitApplication()">Submit</button>
+  </div>
+</form>

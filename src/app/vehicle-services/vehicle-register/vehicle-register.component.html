@@ -1,0 +1,24 @@
+<div class="container">
+  <app-back-btn />
+  <h1 class="font-color">Vehicle Registration Services</h1>
+  <p>
+    This is the main landing page/component where users can access all
+    vehicle-related registration services. It provides a dashboard or card-based
+    layout for the following services.
+  </p>
+  <div class="grid">
+    <div class="card" *ngFor="let service of services">
+      <img
+        [alt]="'Icon representing ' + service.title"
+        height="100"
+        [src]="service.imageUrl"
+        width="100"
+      />
+      <h2 class="font-color">{{ service.title }}</h2>
+      <p>{{ service.description }}</p>
+      <a [routerLink]="service.route"><button class="bg-color">
+        {{ service.buttonText }}
+      </button></a>
+    </div>
+  </div>
+</div>

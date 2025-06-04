@@ -1,0 +1,152 @@
+<app-back-btn />
+<form [formGroup]="nocForm" (ngSubmit)="submitForm()" class="form-container">
+  <h2 class="form-title">Apply for No Objection Certificate (NOC)</h2>
+  
+  <div class="form-row">
+    <div class="form-group">
+      <label>Vehicle Number:</label>
+      <input type="text" formControlName="vehicleNumber" class="form-input" placeholder="e.g. MH01AB1234" />
+      <div *ngIf="nocForm.get('vehicleNumber')?.invalid && nocForm.get('vehicleNumber')?.touched" class="validation-error">
+        Valid vehicle number is required (Format: AB12CD1234)
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Chassis Number:</label>
+      <input type="text" formControlName="chassisNumber" class="form-input" placeholder="17-digit chassis number" />
+      <div *ngIf="nocForm.get('chassisNumber')?.invalid && nocForm.get('chassisNumber')?.touched" class="validation-error">
+        Valid 17-digit chassis number is required
+      </div>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label>Engine Number:</label>
+      <input type="text" formControlName="engineNumber" class="form-input" placeholder="Engine number" />
+      <div *ngIf="nocForm.get('engineNumber')?.invalid && nocForm.get('engineNumber')?.touched" class="validation-error">
+        Engine number is required
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Owner Name:</label>
+      <input type="text" formControlName="ownerName" class="form-input" placeholder="As per RC" />
+      <div *ngIf="nocForm.get('ownerName')?.invalid && nocForm.get('ownerName')?.touched" class="validation-error">
+        Owner name is required
+      </div>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label>Current State:</label>
+      <input type="text" formControlName="fromState" class="form-input" placeholder="Current state" />
+      <div *ngIf="nocForm.get('fromState')?.invalid && nocForm.get('fromState')?.touched" class="validation-error">
+        Current state is required
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Current RTO:</label>
+      <input type="text" formControlName="fromRTO" class="form-input" placeholder="Current RTO" />
+      <div *ngIf="nocForm.get('fromRTO')?.invalid && nocForm.get('fromRTO')?.touched" class="validation-error">
+        Current RTO is required
+      </div>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label>Transfer To State:</label>
+      <input type="text" formControlName="toState" class="form-input" placeholder="New state" />
+      <div *ngIf="nocForm.get('toState')?.invalid && nocForm.get('toState')?.touched" class="validation-error">
+        New state is required
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Transfer To RTO:</label>
+      <input type="text" formControlName="toRTO" class="form-input" placeholder="New RTO" />
+      <div *ngIf="nocForm.get('toRTO')?.invalid && nocForm.get('toRTO')?.touched" class="validation-error">
+        New RTO is required
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Reason for NOC:</label>
+    <input type="text" formControlName="reason" class="form-input" placeholder="Reason for transfer" />
+    <div *ngIf="nocForm.get('reason')?.invalid && nocForm.get('reason')?.touched" class="validation-error">
+      Reason is required
+    </div>
+  </div>
+
+  <div class="document-upload-section">
+    <h3 class="section-title">Upload Required Documents</h3>
+    
+    <div class="form-row">
+      <div class="form-group file-upload">
+        <label>RC Copy:</label>
+        <label class="file-upload-label">
+          <input type="file" (change)="onFileChange($event, 'rcCopy')" class="file-input" accept=".pdf,.jpg,.png" required />
+          <span class="file-upload-button">Choose File</span>
+          <span class="file-name">{{ rcCopyFileName || 'No file chosen' }}</span>
+        </label>
+        <div *ngIf="!rcCopyFileName && formSubmitted" class="validation-error">
+          RC copy is required
+        </div>
+      </div>
+
+      <div class="form-group file-upload">
+        <label>Insurance Copy:</label>
+        <label class="file-upload-label">
+          <input type="file" (change)="onFileChange($event, 'insuranceCopy')" class="file-input" accept=".pdf,.jpg,.png" required />
+          <span class="file-upload-button">Choose File</span>
+          <span class="file-name">{{ insuranceCopyFileName || 'No file chosen' }}</span>
+        </label>
+        <div *ngIf="!insuranceCopyFileName && formSubmitted" class="validation-error">
+          Insurance copy is required
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group file-upload">
+        <label>PUC Certificate:</label>
+        <label class="file-upload-label">
+          <input type="file" (change)="onFileChange($event, 'pucCertificate')" class="file-input" accept=".pdf,.jpg,.png" required />
+          <span class="file-upload-button">Choose File</span>
+          <span class="file-name">{{ pucCertificateFileName || 'No file chosen' }}</span>
+        </label>
+        <div *ngIf="!pucCertificateFileName && formSubmitted" class="validation-error">
+          Valid PUC certificate is required
+        </div>
+      </div>
+
+      <div class="form-group file-upload">
+        <label>Address Proof (Optional):</label>
+        <label class="file-upload-label">
+          <input type="file" (change)="onFileChange($event, 'addressProof')" class="file-input" accept=".pdf,.jpg,.png" />
+          <span class="file-upload-button">Choose File</span>
+          <span class="file-name">{{ addressProofFileName || 'No file chosen' }}</span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group declaration">
+    <label class="declaration-label">
+      <input type="checkbox" formControlName="declaration" class="declaration-checkbox" />
+      <span>I confirm that all the provided details are true to the best of my knowledge.</span>
+    </label>
+    <div *ngIf="nocForm.get('declaration')?.invalid && formSubmitted" class="validation-error">
+      You must accept the declaration to proceed
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="submit-button" [disabled]="nocForm.invalid && formSubmitted">Submit NOC Request</button>
+    <button type="button" class="reset-button" (click)="resetForm()">Reset Form</button>
+  </div>
+</form>

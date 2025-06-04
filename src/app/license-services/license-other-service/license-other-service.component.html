@@ -1,0 +1,12 @@
+<app-back-btn /> 
+<div class="services-container bg-lightcolor">
+    <div class="services-grid">
+      <div  *ngFor="let service of services; trackBy: trackByFn"  class="service-item" [routerLink]="service.route">
+        <div class="icon-container">
+          <img [src]="service.iconUrl" [alt]="service.title + ' icon'" class="service-icon">
+        </div>
+        <br />
+        <p class="service-title font-color">{{ service.title }}</p>
+      </div>
+    </div>
+  </div>

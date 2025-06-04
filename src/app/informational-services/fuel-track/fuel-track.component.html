@@ -1,0 +1,39 @@
+<div class="fuel-prices-container">
+  <nav>
+    <a href="#" class="petrol"><i class="fas fa-tint"></i>Petrol</a>
+    <a href="#" class="diesel"><i class="fas fa-tint"></i>Diesel</a>
+    <a href="#" class="cng"><i class="fas fa-tint"></i>CNG</a>
+    <a href="#" class="autogas"><i class="fas fa-tint"></i>Auto Gas</a>
+    <a href="#" class="lpg"><i class="fas fa-tint"></i>LPG</a>
+    <a href="#" class="allfuel"><i class="fas fa-tint"></i>All Fuel</a>
+    <a href="#" class="calculator"><i class="fas fa-file-alt"></i>Fuel Price Calculator</a>
+    <a href="#" class="chart"><i class="fas fa-chart-bar"></i>Fuel Price Chart</a>
+    <a href="#" class="map"><i class="fas fa-map-marker-alt"></i>Fuel Price Map</a>
+  </nav>
+
+  <h2 class="title">Fuel Prices in India</h2>
+
+  <div class="form-container">
+    <form (ngSubmit)="onSubmit()">
+      <select [(ngModel)]="selectedFuelType" name="fuelType" aria-label="Select Fuel Type">
+        <option *ngFor="let fuel of fuelTypes" [value]="fuel.value">{{fuel.name}}</option>
+      </select>
+
+      <select [(ngModel)]="selectedState" name="state" aria-label="Select State">
+        <option *ngFor="let state of states" [value]="state.value">{{state.name}}</option>
+      </select>
+
+      <input
+        type="text"
+        [(ngModel)]="cityName"
+        name="city"
+        placeholder="Enter City Name"
+        aria-label="Enter City Name"
+      />
+
+      <button type="submit">Check Fuel Price!</button>
+    </form>
+  </div>
+</div>
+
+<app-track-item [results]="searchResults"></app-track-item>

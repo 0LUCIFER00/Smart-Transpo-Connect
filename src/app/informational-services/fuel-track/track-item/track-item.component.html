@@ -1,0 +1,15 @@
+<div *ngIf="results.length > 0">
+  <h3 class="result-title">Fuel Prices</h3>
+  <div class="result-grid">
+    <div class="result-card" *ngFor="let item of results">
+      <h4>{{ item.city }}, {{ item.state }}</h4>
+      <p>Fuel Type: {{ item.fuelType }}</p>
+      <p>Price: ₹{{ item.price }}</p>
+      <p>Last Updated: {{ item.date }}</p>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="results.length === 0">
+  <p>No results found. Please enter valid input and submit.</p>
+</div>

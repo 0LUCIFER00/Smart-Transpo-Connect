@@ -1,0 +1,133 @@
+<app-back-btn/>
+<form [formGroup]="ownershipForm" (ngSubmit)="submitForm()" class="form-container">
+<h2 class="form-title">Transfer of Vehicle Ownership</h2>
+  <div class="form-row">
+    <div class="form-group">
+      <label>Old Owner Name:</label>
+      <input type="text" formControlName="oldOwnerName" class="form-input" placeholder="Enter full name" />
+    </div>
+
+    <div class="form-group">
+      <label>New Owner Name:</label>
+      <input type="text" formControlName="newOwnerName" class="form-input" placeholder="Enter full name" />
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label>Vehicle Number:</label>
+      <input type="text" formControlName="vehicleNumber" class="form-input" placeholder="e.g. MH01AB1234" />
+    </div>
+
+    <div class="form-group">
+      <label>Chassis Number:</label>
+      <input type="text" formControlName="chassisNumber" class="form-input" placeholder="17-digit chassis number" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Engine Number:</label>
+    <input type="text" formControlName="engineNumber" class="form-input" placeholder="Enter engine number" />
+  </div>
+
+  <div class="form-group">
+    <label>Reason for Transfer:</label>
+    <select formControlName="reason" class="form-select">
+      <option value="" disabled selected>Select a reason</option>
+      <option *ngFor="let reason of reasons" [value]="reason">{{ reason }}</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>Date of Transfer:</label>
+    <input type="date" formControlName="dateOfTransfer" class="form-input" />
+  </div>
+
+  <div class="form-group">
+    <label>Buyer's Address:</label>
+    <textarea formControlName="buyerAddress" class="form-textarea" placeholder="Full address with PIN code"></textarea>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label>Buyer's Mobile Number:</label>
+      <input type="text" formControlName="buyerMobile" class="form-input" placeholder="10-digit mobile number" />
+    </div>
+
+    <div class="form-group">
+      <label>Buyer's Email (Optional):</label>
+      <input type="email" formControlName="buyerEmail" class="form-input" placeholder="example@domain.com" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>State & RTO:</label>
+    <input type="text" formControlName="stateRTO" class="form-input" placeholder="e.g. Maharashtra, Mumbai West RTO" />
+  </div>
+
+  <div class="document-upload-section">
+    <h3 class="section-title">Upload Required Documents</h3>
+    
+    <div class="form-row">
+      <div class="form-group file-upload">
+        <label>Proof of Transfer (Form 29/30):</label>
+        <label class="file-upload-label">
+          <input type="file" (change)="onFileChange($event, 'transferProof')" class="file-input" accept=".pdf,.jpg,.png" />
+          <span class="file-upload-button">Choose File</span>
+          <span class="file-name">{{ transferProofFileName || 'No file chosen' }}</span>
+        </label>
+      </div>
+
+      <div class="form-group file-upload">
+        <label>Insurance Certificate:</label>
+        <label class="file-upload-label">
+          <input type="file" (change)="onFileChange($event, 'insurance')" class="file-input" accept=".pdf,.jpg,.png" />
+          <span class="file-upload-button">Choose File</span>
+          <span class="file-name">{{ insuranceFileName || 'No file chosen' }}</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group file-upload">
+        <label>PUC Certificate:</label>
+        <label class="file-upload-label">
+          <input type="file" (change)="onFileChange($event, 'puc')" class="file-input" accept=".pdf,.jpg,.png" />
+          <span class="file-upload-button">Choose File</span>
+          <span class="file-name">{{ pucFileName || 'No file chosen' }}</span>
+        </label>
+      </div>
+
+      <div class="form-group file-upload">
+        <label>Address Proof:</label>
+        <label class="file-upload-label">
+          <input type="file" (change)="onFileChange($event, 'addressProof')" class="file-input" accept=".pdf,.jpg,.png" />
+          <span class="file-upload-button">Choose File</span>
+          <span class="file-name">{{ addressProofFileName || 'No file chosen' }}</span>
+        </label>
+      </div>
+    </div>
+
+    <div *ngIf="ownershipForm.value.reason === 'Death'" class="form-group file-upload">
+      <label>Death Certificate:</label>
+      <label class="file-upload-label">
+        <input type="file" (change)="onFileChange($event, 'deathCertificate')" class="file-input" accept=".pdf,.jpg,.png" />
+        <span class="file-upload-button">Choose File</span>
+        <span class="file-name">{{ deathCertificateFileName || 'No file chosen' }}</span>
+      </label>
+    </div>
+
+    <div *ngIf="ownershipForm.value.reason === 'Auction'" class="form-group file-upload">
+      <label>Auction Document:</label>
+      <label class="file-upload-label">
+        <input type="file" (change)="onFileChange($event, 'auctionProof')" class="file-input" accept=".pdf,.jpg,.png" />
+        <span class="file-upload-button">Choose File</span>
+        <span class="file-name">{{ auctionProofFileName || 'No file chosen' }}</span>
+      </label>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="submit-button">Submit Application</button>
+  </div>
+</form>

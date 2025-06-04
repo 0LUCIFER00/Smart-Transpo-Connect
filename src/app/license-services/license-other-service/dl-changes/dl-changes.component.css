@@ -1,0 +1,31 @@
+.dl-change-container {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.dl-change-container label {
+  font-weight: bold;
+}
+
+.dl-change-container input {
+  padding: 6px;
+  margin-bottom: 12px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.button-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+button {
+  padding: 8px 16px;
+}

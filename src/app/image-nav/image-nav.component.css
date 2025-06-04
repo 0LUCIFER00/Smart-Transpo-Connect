@@ -1,0 +1,150 @@
+/* Main Image Container - Now in normal document flow */
+.image-container {
+    overflow: hidden;
+    width: 100%;
+    height: 69vh;
+    background: #f5f5f5;
+    position: relative; 
+}
+
+/* Slide and Item Styles (unchanged) */
+.image-container .slide {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+
+
+.image-container .slide .item {
+    overflow: hidden;
+    width: 200px;
+    height: 300px;
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    border-radius: 20px;
+    box-shadow: 0 20px 20px #000000;
+    display: inline-block;
+    object-fit: cover;
+    object-position: center;
+    transition: 0.5s;
+}
+
+.image-container .slide .item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Special positioning for first two items */
+.image-container .slide .item:nth-child(1),
+.image-container .slide .item:nth-child(2) {
+    top: 0;
+    left: 0;
+    transform: translate(0, 0);
+    border-radius: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Position other items */
+.image-container .slide .item:nth-child(3) { left: 50%; }
+.image-container .slide .item:nth-child(4) { left: calc(50% + 220px); }
+.image-container .slide .item:nth-child(5) { left: calc(50% + 440px); }
+.image-container .slide .item:nth-child(n + 6) { 
+    left: calc(50% + 660px);
+    opacity: 0;
+}
+
+/* Content styles */
+.item .content {
+    position: absolute;
+    top: 50%;
+    left: 100px;
+    width: 300px;
+    text-align: left;
+    color: #eee;
+    transform: translate(0, -50%);
+    font-family: system-ui;
+    display: none;
+}
+
+.image-container .slide .item:nth-child(2) .content {
+    display: block;
+}
+
+/* Animations */
+.content .name {
+    font-size: 40px;
+    text-transform: uppercase;
+    font-weight: bold;
+    opacity: 0;
+    animation: animate 1s ease-in-out 1 forwards;
+}
+
+.content .des {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: animate 1s ease-in-out 0.3s 1 forwards;
+}
+
+.content button {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    opacity: 0;
+    animation: animate 1s ease-in-out 0.6s 1 forwards;
+}
+
+@keyframes animate {
+    from {
+        opacity: 0;
+        transform: translate(0, 100px);
+        filter: blur(33px);
+    }
+    to {
+        opacity: 1;
+        transform: translate(0);
+        filter: blur(0);
+    }
+}
+
+/* Navigation Buttons */
+.button-container {
+    width: 100%;
+    position: absolute;
+    top: 330px;
+    left: 400px;
+}
+
+.button-container button {
+    width: 40px;
+    height: 30px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    margin: 0 5px;
+    transition: 0.3s;
+    color: white;
+}
+
+.button-container button:hover {
+    width: 50px;
+    color: #fff;
+}
+
+/* Horizontal Divider */
+.horizontal-divider {
+    height: 30px;
+    border: 0;
+    width: 100%;
+}
+
+.prev, .next{
+    color: white;
+    font-size: x-large;
+}

@@ -1,0 +1,132 @@
+<app-back-btn />
+<form [formGroup]="scrapForm" (ngSubmit)="submitForm()" class="form-container">
+  <h2 class="form-title">Apply for Vehicle Scrapping Certificate</h2>
+  
+  <div class="form-row">
+    <div class="form-group">
+      <label>Vehicle Number:</label>
+      <input type="text" formControlName="vehicleNumber" class="form-input" placeholder="e.g. MH01AB1234" />
+      <div *ngIf="scrapForm.get('vehicleNumber')?.invalid && scrapForm.get('vehicleNumber')?.touched" class="validation-error">
+        Valid vehicle number is required (Format: AB12CD1234)
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Chassis Number:</label>
+      <input type="text" formControlName="chassisNumber" class="form-input" placeholder="17-digit chassis number" />
+      <div *ngIf="scrapForm.get('chassisNumber')?.invalid && scrapForm.get('chassisNumber')?.touched" class="validation-error">
+        Valid 17-digit chassis number is required
+      </div>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label>Engine Number:</label>
+      <input type="text" formControlName="engineNumber" class="form-input" placeholder="Engine number" />
+      <div *ngIf="scrapForm.get('engineNumber')?.invalid && scrapForm.get('engineNumber')?.touched" class="validation-error">
+        Engine number is required
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Owner Name:</label>
+      <input type="text" formControlName="ownerName" class="form-input" placeholder="As per RC" />
+      <div *ngIf="scrapForm.get('ownerName')?.invalid && scrapForm.get('ownerName')?.touched" class="validation-error">
+        Owner name is required
+      </div>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label>Registered State:</label>
+      <input type="text" formControlName="state" class="form-input" placeholder="State of registration" />
+      <div *ngIf="scrapForm.get('state')?.invalid && scrapForm.get('state')?.touched" class="validation-error">
+        State is required
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>RTO Office:</label>
+      <input type="text" formControlName="rto" class="form-input" placeholder="Registered RTO" />
+      <div *ngIf="scrapForm.get('rto')?.invalid && scrapForm.get('rto')?.touched" class="validation-error">
+        RTO office is required
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Reason for Scrapping:</label>
+    <select formControlName="reason" class="form-input">
+      <option value="">Select reason</option>
+      <option value="end_of_life">End of Life Vehicle</option>
+      <option value="accident_damaged">Accident Damaged</option>
+      <option value="beyond_repair">Beyond Economic Repair</option>
+      <option value="other">Other (Specify)</option>
+    </select>
+    <div *ngIf="scrapForm.get('reason')?.invalid && scrapForm.get('reason')?.touched" class="validation-error">
+      Reason for scrapping is required
+    </div>
+    <input *ngIf="scrapForm.get('reason')?.value === 'other'" 
+           type="text" formControlName="otherReason" class="form-input" style="margin-top: 10px;" 
+           placeholder="Please specify reason" />
+  </div>
+
+  <div class="document-upload-section">
+    <h3 class="section-title">Upload Required Documents</h3>
+    
+    <div class="form-row">
+      <div class="form-group file-upload">
+        <label>RC Copy:</label>
+        <label class="file-upload-label">
+          <input type="file" (change)="onFileChange($event, 'rcCopy')" class="file-input" accept=".pdf,.jpg,.png" required />
+          <span class="file-upload-button">Choose File</span>
+          <span class="file-name">{{ rcCopyFileName || 'No file chosen' }}</span>
+        </label>
+        <div *ngIf="!rcCopyFileName && formSubmitted" class="validation-error">
+          RC copy is required
+        </div>
+      </div>
+
+      <div class="form-group file-upload">
+        <label>Identity Proof:</label>
+        <label class="file-upload-label">
+          <input type="file" (change)="onFileChange($event, 'identityProof')" class="file-input" accept=".pdf,.jpg,.png" required />
+          <span class="file-upload-button">Choose File</span>
+          <span class="file-name">{{ identityProofFileName || 'No file chosen' }}</span>
+        </label>
+        <div *ngIf="!identityProofFileName && formSubmitted" class="validation-error">
+          Identity proof is required (Aadhaar, PAN, etc.)
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group file-upload">
+      <label>Consent Form (Signed):</label>
+      <label class="file-upload-label">
+        <input type="file" (change)="onFileChange($event, 'consentForm')" class="file-input" accept=".pdf,.jpg,.png" required />
+        <span class="file-upload-button">Choose File</span>
+        <span class="file-name">{{ consentFormFileName || 'No file chosen' }}</span>
+      </label>
+      <div *ngIf="!consentFormFileName && formSubmitted" class="validation-error">
+        Signed consent form is required
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group declaration">
+    <label class="declaration-label">
+      <input type="checkbox" formControlName="declaration" class="declaration-checkbox" />
+      <span>I confirm the above details are correct and I request vehicle scrapping.</span>
+    </label>
+    <div *ngIf="scrapForm.get('declaration')?.invalid && formSubmitted" class="validation-error">
+      You must accept the declaration to proceed
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="submit-button" [disabled]="scrapForm.invalid && formSubmitted">Submit Scrapping Request</button>
+    <button type="button" class="reset-button" (click)="resetForm()">Reset Form</button>
+  </div>
+</form>

@@ -1,0 +1,106 @@
+<app-back-btn />
+<div *ngIf="!learnerVerified" class="learner-form-container">
+  <h2>Enter Learner's License Details</h2>
+  <form [formGroup]="learnerForm" (ngSubmit)="verifyLearnerDetails()">
+    <div class="form-group">
+      <label for="licenseNumber">Learner’s License Number</label>
+      <input type="text" id="licenseNumber" formControlName="licenseNumber" required>
+    </div>
+
+    <div class="form-group captcha-group">
+      <label>Captcha: <strong>{{ generatedCaptcha }}</strong></label>
+      <input type="text" formControlName="captcha" placeholder="Enter Captcha" required>
+    </div>
+
+    <button class="btn" type="submit" [disabled]="!learnerForm.valid">
+      Start Test
+    </button>
+  </form>
+</div>
+
+
+
+
+<div class="test-container" *ngIf="learnerVerified">
+    <div class="test-header">
+      <h2>Online Driving License Test</h2>
+      <div class="timer">
+        <i class="fas fa-clock"></i>
+        Time Remaining: {{formatTime(timeLeft)}}
+      </div>
+    </div>
+  
+    <div *ngIf="!testCompleted" class="test-content">
+      <div class="question-progress">
+        Question {{currentQuestionIndex + 1}} of {{questions.length}}
+      </div>
+  
+      <div class="question-container">
+        <div class="question-text">
+          <h3>{{questions[currentQuestionIndex].text}}</h3>
+          <img *ngIf="questions[currentQuestionIndex].imageUrl" 
+               [src]="questions[currentQuestionIndex].imageUrl" 
+               alt="Question image">
+        </div>
+  
+        <div class="options-container">
+          <div *ngFor="let option of questions[currentQuestionIndex].options; let i = index" 
+               class="option" 
+               [class.selected]="questions[currentQuestionIndex].selectedOption === i"
+               (click)="selectOption(i)">
+               <span class="option-letter">{{getOptionLetter(i)}}</span>
+            <span class="option-text">{{option}}</span>
+          </div>
+        </div>
+      </div>
+  
+      <div class="navigation-buttons">
+        <button class="btn btn-secondary" 
+                [disabled]="currentQuestionIndex === 0" 
+                (click)="previousQuestion()">
+          Previous
+        </button>
+        
+        <button class="btn btn-warning" (click)="markForReview()">
+          Mark for Review
+        </button>
+        
+        <button *ngIf="currentQuestionIndex < questions.length - 1" 
+                class="btn btn-primary" 
+                (click)="nextQuestion()">
+          Next
+        </button>
+        
+        <button *ngIf="currentQuestionIndex === questions.length - 1" 
+                class="btn btn-success" 
+                (click)="finishTest()">
+          Finish Test
+        </button>
+      </div>
+    </div>
+  
+    <div *ngIf="testCompleted" class="result-container">
+      <div class="result-card">
+        <h3>Test Completed!</h3>
+        <div class="score-display">
+          Your Score: <span class="score">{{score}}/{{questions.length}}</span>
+        </div>
+        <div class="result-message">
+          <p *ngIf="score >= questions.length * 0.7" class="pass">
+            Congratulations! You have passed the test.
+          </p>
+          <p *ngIf="score < questions.length * 0.7" class="fail">
+            Sorry, you didn't pass. Please try again.
+          </p>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-primary" (click)="restartTest()">
+            Take Test Again
+          </button>
+          <button class="btn btn-secondary" (click)="exitTest()">
+            Exit
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>

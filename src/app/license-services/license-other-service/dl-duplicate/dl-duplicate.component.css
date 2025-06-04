@@ -1,0 +1,80 @@
+.dl-verification-form,
+.duplicate-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  border-radius: 12px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.dl-verification-form h2,
+.duplicate-container h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.dl-verification-form label,
+.duplicate-container label {
+  display: block;
+  margin-top: 1rem;
+  font-weight: 600;
+  color: #444;
+}
+
+.dl-verification-form input[type="text"],
+.dl-verification-form input[type="date"],
+.duplicate-container input[type="text"],
+.duplicate-container input[type="date"],
+.duplicate-container input[type="file"],
+.duplicate-container select {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.3rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 1rem;
+}
+
+.button-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+.button-row button,
+.dl-verification-form button {
+  flex: 1;
+  margin: 0 0.5rem;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: #fff;
+  transition: background-color 0.3s ease;
+}
+
+.button-row button:hover,
+.dl-verification-form button:hover {
+  background-color: #0056b3;
+}
+
+.button-row button:disabled,
+.dl-verification-form button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.button-row button:first-child {
+  margin-left: 0;
+}
+
+.button-row button:last-child {
+  margin-right: 0;
+}

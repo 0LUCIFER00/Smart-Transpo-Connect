@@ -1,0 +1,29 @@
+<div class="bg-lightcolor">
+    <div class="container">
+      <!-- Title -->
+      <h1>Vehicle Related Services</h1>
+  
+      <!-- Description -->
+      <p>
+        Various services related to registration of vehicle/already registered vehicle like
+        Appointment Booking, Application Status, Duplicate Registration, Change of Address,
+        Transfer of Ownership, Hypothecation, etc.
+      </p>
+  
+      <!-- Service Cards Grid -->
+      <div class="grid">
+        <!-- Service Card -->
+        <div class="card" *ngFor="let service of services">
+          <img
+            [alt]="service.title + ' Icon'"
+            height="100"
+            [src]="service.imageUrl"
+            width="100"
+          />
+          <h2>{{service.title}}</h2>
+          <p>{{service.description}}</p>
+          <button class="bg-color" [routerLink]="service.route">{{service.buttonText}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
